@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shopping Bill Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url('background.jpg'); /* Add your background image URL here */
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        #container {
+            width: 400px;
+            background-color: rgba(255, 255, 255, 0.7); /* Background color with opacity */
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #000; /* Add border style */
+        }
+        select, input[type="number"] {
+            width: 100%;
+            padding: 5px;
+            margin: 5px 0;
+        }
+        #items {
+            text-align: left;
+        }
+        #total {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Shopping Bill Calculator</h1>
+        <label for="item">Select Item:</label>
+        <select id="item">
+            <option value="">-- Select an item --</option>
+            <option value="Item 1" data-price="10.00">spices - $10.00</option>
+            <option value="Item 2" data-price="15.00">rice - $15.00</option>
+            <option value="Item 3" data-price="20.00">vegetables - $20.00</option>
+            <option value="Item 4" data-price="25.00">fruits - $25.00</option>
+            <option value="Item 5" data-price="30.00">grains - $30.00</option>
+            <option value="Item 6" data-price="35.00">cool drinks - $35.00</option>
+            <option value="Item 7" data-price="40.00">dairy - $40.00</option>
+            <option value="Item 8" data-price="45.00">breads - $45.00</option>
+            <option value="Item 9" data-price="50.00">pet items - $50.00</option>
+            <option value="Item 10" data-price="55.00">cereal - $55.00</option>
+            <option value="Item 11" data-price="60.00">baking - $60.00</option>
+            <option value="Item 12" data-price="65.00">snacks - $65.00</option>
+            <option value="Item 13" data-price="70.00">household - $70.00</option>
+            <option value="Item 14" data-price="75.00">pasta - $75.00</option>
+            <option value="Item 15" data-price="80.00">meat - $80.00</option>
+            <option value="Item 16" data-price="85.00">fish - $85.00</option>
+            <option value="Item 17" data-price="90.00">condiments - $90.00</option>
+            <option value="Item 18" data-price="95.00">frozen foods - $95.00</option>
+            <option value="Item 19" data-price="100.00">sauces and oils - $100.00</option>
+            <option value="Item 20" data-price="105.00">cheese - $105.00</option>
+            <!-- Add more items here -->
+        </select>
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" placeholder="Quantity" min="1">
+        <button onclick="addItem()">Add Item</button>
+
+        <div id="items">
+            <h2>Items List</h2>
+            <ul id="item-list"></ul>
+        </div>
+
+        <div id="total">
+            <h2>Total</h2>
+            <p id="total-amount">$0.00</p>
+        </div>
+    </div>
+
+    <script>
+        let items = [];
+        let totalAmount = 0;
+
+        function addItem() {
+            const itemName = document.getElementById("item").value;
+            const quantity = parseInt(document.getElementById("quantity").value);
+
+            if (itemName && quantity >= 1) {
+                const price = parseFloat(document.getElementById("item").selectedOptions[0].getAttribute("data-price"));
+                const totalPrice = price * quantity;
+                items.push({ name: itemName, price: totalPrice });
+                totalAmount += totalPrice;
+                updateItemList();
+                updateTotalAmount();
+
+                // Clear input fields
+                document.getElementById("item").value = "";
+                document.getElementById("quantity").value = "";
+            } else {
+                alert("Please select an item and enter a valid quantity (minimum 1).");
+            }
+        }
+
+        function updateItemList() {
+            const itemList = document.getElementById("item-list");
+            itemList.innerHTML = "";
+            items.forEach((item) => {
+                const li = document.createElement("li");
+                li.textContent = `${item.name}: $${item.price.toFixed(2)}`;
+                itemList.appendChild(li);
+            });
+        }
+
+        function updateTotalAmount() {
+            const totalAmountDisplay = document.getElementById("total-amount");
+            totalAmountDisplay.textContent = `$${totalAmount.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
